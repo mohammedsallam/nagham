@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Type extends Model
 {
     use HasFactory;
-    protected $tabel ='types';
-    protected $fillable =['name', 'imageUrl', 'information', 'city_id'];
+
+    protected $fillable =['name', 'imageUrl', 'information', 'city_id']; // 'name', 'imageUrl', 'information',
 
     public function city()
     {
-        $this -> belongsTo('App\Models\City', 'city_id', 'id');
-        
+        return $this->belongsTo(City::class, 'city_id');
+
     }
 
-    public function types()
+    public function contents()
     {
-         $this -> hasMany('App\Models\Content', 'type_id', 'id');
+         return $this->hasMany(Content::class, 'type_id', 'id');
     }
 }

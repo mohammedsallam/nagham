@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class DetailsController extends Controller
 {
+
+    protected $view = 'admin.details.';
+
     public function index()
     {
       $details=Details::all();
-        return view('admin.web.details',compact('details'));
+        return view($this->view.'index',compact('details'));
     }
 
       public function create(Request $request)
@@ -27,12 +30,12 @@ class DetailsController extends Controller
     }
       public function show($id)
     {
-      
+
     }
 
       public function edit($id)
     {
-      
+
     }
 
     public function update(Request $request )
@@ -50,7 +53,7 @@ class DetailsController extends Controller
        return redirect('/details');
     }
 
-    
+
     public function delate($id)
 
     {

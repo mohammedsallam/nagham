@@ -9,11 +9,14 @@ use Illuminate\Http\Request;
 class ContentController extends Controller
 {
 
-  public function index($type_id)
+    protected $view = 'admin.contents.';
+
+
+    public function index($type_id)
   {
      $type= Type::find($type_id);
      $contents= $type -> contents;
-     return view('admin.web.content' ,compact('contents'));
+     return view($this->view.'index' ,compact('contents'));
   }
       public function create(Request $request)
     {
@@ -29,12 +32,12 @@ class ContentController extends Controller
 
       public function show($id)
     {
-      
+
     }
 
       public function edit($id)
     {
-      
+
     }
 
       public function update(Request $request )
@@ -47,7 +50,7 @@ class ContentController extends Controller
         $oldcontent->imageUrl = $imageName;
         $request->imageUrl->move(public_path('images'), $imageName );
        }
-      
+
        $oldcontent->save();
 
        return redirect('/content');

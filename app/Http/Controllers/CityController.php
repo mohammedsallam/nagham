@@ -3,85 +3,130 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\File;
+use function PHPUnit\Framework\fileExists;
 
 class CityController extends Controller
 {
 
-  public function index()
-  {
-    $cities = City::select('id', 'name', 'information', 'imageUrl')->get();
-    return view('admin.web.city', compact('cities'));
-  }
 
-  public function create(Request $request)
-  {
-    $city = new City();
-    $city->name = $request->name;
-    $imageName = 'city' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
-    $city->imageUrl = $imageName;
-    $request->imageUrl->move(public_path('images'), $imageName);
-    $city->information = $request->information;
-    $city->save();
+    protected $view = 'admin.cities.';
 
-    return redirect('/city');
-  }
-
-
-  public function store(Request $request)
-  {
-    //
-  }
-
-
-  public function show($id)
-  {
-    //
-  }
-
-
-  public function edit($id)
-  {
-    //
-  }
-
-
-  public function update(Request $request)
-  {
-    $oldcity = City::find($request->id);
-    $oldcity->name = $request->name;
-    if ($request->imageUrl) {
-      $imageName = 'city' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
-      $oldcity->imageUrl = $imageName;
-      $request->imageUrl->move(public_path('images'), $imageName);
+    public function index()
+    {
+        $cities = City::select('id', 'name', 'information', 'imageUrl')->get();
+        return view($this->view.'index', compact('cities'));
     }
 
-    $oldcity->information = $request->information;
-    $oldcity->save();
+    public function create(Request $request)
+    {
+        $this->validate($request, [
+        'name' => 'required|min:3',
+        'information' => 'required|min:3',
+//        'type' => 'required|string|min:3',
+        'imageUrl' => 'required|image|mimes:jpg,png,jpeg',
+        ], [], []);
 
-    return redirect('/city');
-  }
 
 
-  public function delete($id)
-  {
-    $oldcity = City::find($id);
-    if (!$oldcity)
-      return abort('404');
+        $imageName = 'city_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
+        $imagePath = '/uploads/'.$imageName;
+        $request->imageUrl->move(public_path('uploads'), $imageName);
 
-    $oldcity->types()->delete();
-    $oldcity->delete();
-    return redirect('/city');
-  }
+        $city = City::create([
+        'name' => $request->name,
+        'information' => $request->information,
+        'imageUrl' => $imagePath
+        ]);
 
-  // public function citiesHasTypes()
-  // {
-  //   return $city = City::whereHas('cities')->get();
+//        Type::create([
+//        'city_id' => $city->id,
+//        'type' => $request->type
+//        ]);
 
-  // }
+        return redirect()->route('cityIndex');
+    }
 
-  // public function citiesNotHasTypes()
-  // {
-  // }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+
+    public function show($id)
+    {
+        //
+    }
+
+
+    public function edit($id)
+    {
+        //
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+        'name' => 'required|min:3',
+        'information' => 'required|min:3',
+//        'type' => 'required|string|min:3',
+        'imageUrl' => 'sometimes',
+        ], [], []);
+
+        $city = City::find($id);
+        $city->update($request->except(['imageUrl']));
+
+        if ($request->imageUrl){
+            if ($city->imageUrl){
+                if (fileExists(public_path().$city->imageUrl)){
+                    File::delete(public_path().$city->imageUrl);
+                }
+
+                $imageName = 'city_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
+                $imagePath = '/uploads/'.$imageName;
+                $request->imageUrl->move(public_path('uploads'), $imageName);
+                $city->update(['imageUrl' => $imagePath]);
+
+            } else {
+                $imageName = 'city_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
+                $imagePath = '/uploads/'.$imageName;
+                $request->imageUrl->move(public_path('uploads'), $imageName);
+                $city->update(['imageUrl' => $imagePath]);
+            }
+        }
+
+//        $city->types()->update([
+//            'city_id' => $city->id,
+//            'type' => $request->type
+//        ]);
+
+        return redirect()->route('cityIndex');
+    }
+
+
+    public function delete($id)
+    {
+        $oldcity = City::find($id);
+        if (!$oldcity) {
+        return abort('404');
+        }
+        File::delete(public_path().$oldcity->imageUrl);
+        $oldcity->delete();
+        return redirect('/city');
+    }
+
+    // public function citiesHasTypes()
+    // {
+    //   return $city = City::whereHas('cities')->get();
+
+    // }
+
+    // public function citiesNotHasTypes()
+    // {
+    // }
 }

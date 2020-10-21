@@ -8,19 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     use HasFactory;
-    protected $tabel ='contents';
     protected $fillable =['name', 'imageUrl', 'information','type_id'];
 
     //realation
 public function details()
 {
-    return $this->belongsTo('App\Models\Details', 'details_id', null);
+    return $this->belongsTo(Details::class, 'details_id');
 }
 
 public function type()
 {
-    $this -> belongsTo('App\Models\Type', 'type_id', 'id');
-    
+    $this -> belongsTo(Type::class, 'type_id', 'id');
+
 }
 
 }

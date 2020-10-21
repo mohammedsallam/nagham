@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class City extends Model
 {
     use HasFactory;
-    protected $tabel ='cities';
+
     protected $fillable =['name', 'imageUrl', 'information'];
 
-    public function cities()
+    public function types()
     {
-         $this -> hasMany('App\Models\Type', 'city_id', 'id');
+         return $this->hasMany(Type::class);
     }
 }

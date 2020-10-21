@@ -14,12 +14,14 @@ class CreateContentsTable extends Migration
     public function up()
     {
         Schema::create('contents', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->text('information');
             $table->text('imageUrl');
             $table->bigInteger('type_id');
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 

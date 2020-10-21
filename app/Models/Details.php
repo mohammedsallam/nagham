@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Details extends Model
 {
     use HasFactory;
-    protected $tabel = 'details';
     protected $fillable = [
         'name', 'phone1', 'phone2', 'phone3', 'emailFacebook', 'emailInstagram', 'location',
         'link', 'notes', 'imageUrlLocation', 'imageUrl1', 'imageUrl2', 'imageUrl3', 'content_id'
@@ -17,7 +16,7 @@ class Details extends Model
     //realation
     public function content()
     {
-        return $this->hasOne('App\Models\Content', 'content_id', null);
+        return $this->hasOne(Content::class, 'content_id', null);
     }
 
     public function hasoneRrlation()

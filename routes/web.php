@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', function () {
 //     return view('admin.web.index');
-// });   
+// });
 
 Route::get('/city', [App\Http\Controllers\CityController::class, 'index'])->name('cityIndex');
 Route::post('/Addcity', [App\Http\Controllers\CityController::class, 'create'])->name('cityAdd');
-Route::patch('/Editcity', [App\Http\Controllers\CityController::class, 'update'])->name('cityEdit');
+Route::patch('/Editcity/{id}', [App\Http\Controllers\CityController::class, 'update'])->name('cityEdit');
 Route::get('/Deletecity/{id}', [App\Http\Controllers\CityController::class, 'delete'])->name('cityDelete');
 
-Route::get('/type/{city_id}', [App\Http\Controllers\TypeController::class, 'index'])->name('typeIndex');
+Route::get('/type/{city?}', [App\Http\Controllers\TypeController::class, 'index'])->name('typeIndex');
 Route::post('/Addtype', [App\Http\Controllers\TypeController::class, 'create'])->name('typeAdd');
-Route::patch('/Edittype', [App\Http\Controllers\TypeController::class, 'update'])->name('typeEdit');
+Route::patch('/Edittype/{id}', [App\Http\Controllers\TypeController::class, 'update'])->name('typeEdit');
 Route::delete('/Deletetype/{id}', [App\Http\Controllers\TypeController::class, 'delete'])->name('typeDelete');
 
 Route::get('/content/{type_id}', [App\Http\Controllers\ContentController::class, 'index'])->name('contentIndex');

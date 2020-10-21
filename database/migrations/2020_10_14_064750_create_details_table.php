@@ -14,7 +14,7 @@ class CreateDetailsTable extends Migration
     public function up()
     {
         Schema::create('details', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('phone1');
             $table->string('phone2');
@@ -31,6 +31,8 @@ class CreateDetailsTable extends Migration
             $table->text('imageUrl3');
             $table->bigInteger('content_id');
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 
