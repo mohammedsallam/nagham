@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use function PHPUnit\Framework\fileExists;
 
 class ContentController extends Controller
 {
@@ -12,55 +14,92 @@ class ContentController extends Controller
     protected $view = 'admin.contents.';
 
 
-    public function index($type_id)
-  {
-     $type= Type::find($type_id);
-     $contents= $type -> contents;
-     return view($this->view.'index' ,compact('contents'));
-  }
-      public function create(Request $request)
+    public function index(Type $type)
     {
-     $content = new Content();
-     $content->name = $request->name;
-     $content->information = $request->information;
-     $imageName='content'. time() . '.' .$request->imageUrl->getClientOriginalExtension() ;
-     $content->imageUrl = $imageName;
-     $request->imageUrl->move(public_path('images'), $imageName );
-     $content->save();
-     return redirect('/content');
+        if ($type->id){
+            $contents = $type->contents()->cursor();
+        } else {
+            $contents = Content::cursor();
+        }
+
+        $types = Type::pluck('id', 'name');
+        return view($this->view.'index', compact('contents', 'types'));
     }
 
-      public function show($id)
+    public function create(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'information' => 'required|min:3',
+            'type_id' => 'required',
+            'imageUrl' => 'required',
+        ], [], []);
+
+        $imageName = 'content_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
+        $imagePath = '/uploads/'.$imageName;
+        $request->imageUrl->move(public_path('uploads'), $imageName);
+
+        Content::create([
+            'name' => $request->name,
+            'information' => $request->information,
+            'type_id' => $request->type_id,
+            'imageUrl' => $imagePath,
+        ]);
+
+        return redirect('/content');
+    }
+    public function show($id)
     {
 
     }
 
-      public function edit($id)
+    public function edit($id)
     {
 
     }
 
-      public function update(Request $request )
+    public function update(Request $request, Content $content)
     {
-       $oldcontent = Content::find($request-> id);
-       $oldcontent->name = $request->name;
-       $oldcontent->information = $request->information;
-       if($request->imageUrl){
-        $imageName='content'. time() . '.' .$request->imageUrl->getClientOriginalExtension() ;
-        $oldcontent->imageUrl = $imageName;
-        $request->imageUrl->move(public_path('images'), $imageName );
-       }
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'information' => 'required|min:3',
+            'type_id' => 'required',
+            'imageUrl' => 'sometimes',
+        ], [], []);
 
-       $oldcontent->save();
+        $content->update($request->except(['imageUrl']));
 
-       return redirect('/content');
+        if ($request->imageUrl){
+            if ($content->imageUrl){
+                if (fileExists(public_path().$content->imageUrl)){
+                    File::delete(public_path().$content->imageUrl);
+                }
+
+                $imageName = 'content_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
+                $imagePath = '/uploads/'.$imageName;
+                $request->imageUrl->move(public_path('uploads'), $imageName);
+                $content->update(['imageUrl' => $imagePath]);
+
+            } else {
+                $imageName = 'content_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
+                $imagePath = '/uploads/'.$imageName;
+                $request->imageUrl->move(public_path('uploads'), $imageName);
+                $content->update(['imageUrl' => $imagePath]);
+            }
+        }
+
+
+        return redirect('/content');
     }
 
-      public function delate($id)
 
+    public function delete($id)
     {
-      $oldcontent = Content::find($id);
-      $oldcontent -> delete();
-      return redirect('/content');
+        $oldContent = Content::find($id);
+        File::delete(public_path().$oldContent->imageUrl);
+        $oldContent -> delete();
+        return redirect('/content');
     }
+
+
 }

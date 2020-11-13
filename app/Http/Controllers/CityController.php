@@ -69,7 +69,7 @@ class CityController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, City $city)
     {
         $this->validate($request, [
         'name' => 'required|min:3',
@@ -78,7 +78,6 @@ class CityController extends Controller
         'imageUrl' => 'sometimes',
         ], [], []);
 
-        $city = City::find($id);
         $city->update($request->except(['imageUrl']));
 
         if ($request->imageUrl){

@@ -65,7 +65,7 @@ class TypeController extends Controller
 
   }
 
-  public function update(Request $request, $id)
+  public function update(Request $request, Type $type)
   {
 
       $this->validate($request, [
@@ -74,8 +74,6 @@ class TypeController extends Controller
           'city_id' => 'required',
           'imageUrl' => 'sometimes',
       ], [], []);
-
-      $type = Type::find($id);
 
       $type->update($request->except(['imageUrl']));
 

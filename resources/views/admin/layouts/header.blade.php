@@ -70,7 +70,7 @@
                   <a href="{{route('typeIndex')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Type</p>
-                  <a href="" class="nav-link">
+                  <a href="{{route('contentIndex')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Content</p>
                   <a href="{{route('detailsIndex')}}" class="nav-link">
