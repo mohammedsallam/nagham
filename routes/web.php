@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
 
     Route::resource('/cities', App\Http\Controllers\Admin\CityController::class);
-    Route::resource('/types', App\Http\Controllers\Admin\TypeController::class);
+    Route::resource('/types', App\Http\Controller\Admin\TypeController::class);
     Route::resource('/contents', App\Http\Controllers\Admin\ContentController::class);
     Route::resource('/details', App\Http\Controllers\Admin\DetailsController::class);
     Route::resource('/users', App\Http\Controllers\Admin\UserController::class);
