@@ -102,7 +102,7 @@
                     <td> {{$city->id}}</td>
                     <td> {{$city->name}}</td>
                     <td> {{$city->information}}</td>
-                    <td><img src="{{asset($city->imageUrl)}} " style="width: 50px; height: 50px"></td>
+                    <td><img src="{{asset($city->imageUrl)}} " style="width: 50px;"></td>
                     <td><a href="{{route('typeIndex', $city-> id)}}" class="btn btn-success">view type</a></td>
                     <td class="d-flex justify-content-center">
                         <button data-id="{{$city->id}}" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ModalAddType"><i class="fa fa-plus"></i></button>

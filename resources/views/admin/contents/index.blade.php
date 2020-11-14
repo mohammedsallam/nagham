@@ -114,7 +114,7 @@
                                                 <td> {{$content->id}}</td>
                                                 <td> {{$content->name}}</td>
                                                 <td> {{$content->information}}</td>
-                                                <td><img src="{{asset($content->imageUrl)}} " style="width: 50px; height: 50px"></td>
+                                                <td><img src="{{asset($content->imageUrl)}} " style="width: 50px;"></td>
                                                 <td><a href="{{route('detailsIndex', $content-> id)}}" class="btn btn-success">view Details</a></td>
                                                 <td class="d-flex justify-content-center">
                                                     <button data-id="{{$content->id}}" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ModalAddType"><i class="fa fa-plus"></i></button>
