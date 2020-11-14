@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::get('/', function () {
-//     return view('admin.web.index');
-// });
+ Route::get('/', function () {
+     return redirect()->route('login');
+ });
 
 Route::get('/city', [App\Http\Controllers\CityController::class, 'index'])->name('cityIndex');
 Route::post('/Addcity', [App\Http\Controllers\CityController::class, 'create'])->name('cityAdd');
@@ -38,12 +38,14 @@ Route::post('/Adddetails', [App\Http\Controllers\DetailsController::class, 'crea
 Route::patch('/Editdetails/{detail}', [App\Http\Controllers\DetailsController::class, 'update'])->name('detailsEdit');
 Route::delete('/Deletedetails/{detail}', [App\Http\Controllers\DetailsController::class, 'delete'])->name('detailsDelete');
 
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+});
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-////relation
 
 //Route::get('/has-one', [App\Http\Controllers\RrlationController::class, 'hasoneRrlation']);
 //

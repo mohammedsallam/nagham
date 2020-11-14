@@ -46,10 +46,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
+                  <form action="{{route('logout')}}" method="post" class="logout_form">
+                      @csrf()
+                      <a href="#" onclick="$('.logout_form').submit()" class="nav-link">
+                          <i class="fas fa-sign-out-alt"></i>
+                          <p>Logout</p>
+                      </a>
+                  </form>
               </li>
             </ul>
           </li>
