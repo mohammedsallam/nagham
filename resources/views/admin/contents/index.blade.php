@@ -30,7 +30,7 @@
 
                                 <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
-                                        <form method="POST" action="{{route('contentAdd')}}" enctype="multipart/form-data">
+                                        <form method="POST" action="{{route('contents.store')}}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -115,13 +115,13 @@
                                                 <td> {{$content->name}}</td>
                                                 <td> {{$content->information}}</td>
                                                 <td><img src="{{asset($content->imageUrl)}} " style="width: 50px;"></td>
-                                                <td><a href="{{route('detailsIndex', $content-> id)}}" class="btn btn-success">view Details</a></td>
+                                                <td><a href="{{route('details.show', $content)}}" class="btn btn-success">view Details</a></td>
                                                 <td class="d-flex justify-content-center">
                                                     <button data-id="{{$content->id}}" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ModalAddType"><i class="fa fa-plus"></i></button>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <form class="mr-1 " action="{{route('contentDelete', $content)}}" method="POST">
+                                                        <form class="mr-1 " action="{{route('contents.destroy', $content)}}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger delete_button" type="submit">Delete</button>
@@ -133,7 +133,7 @@
                                             </tr>
                                             <div class="modal fade ModalEditType" id="ModalEditContent_{{$content->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
-                                                    <form method="post" action="{{route('contentEdit', $content)}}" enctype="multipart/form-data">
+                                                    <form method="post" action="{{route('contents.update', $content)}}" enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PATCH')
                                                         <div class="modal-content">
@@ -219,7 +219,7 @@
 
     <div class="modal fade" id="ModalAddType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <form method="POST" action="{{route('detailsAdd')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('details.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">

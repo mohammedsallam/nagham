@@ -14,7 +14,12 @@ return [
     'roles_structure' => [
         'super_admin' => [
             'users' => 'c,r,u,d',
+            'cities' => 'c,r,u,d',
+            'types' => 'c,r,u,d',
+            'contents' => 'c,r,u,d',
+            'details' => 'c,r,u,d',
         ],
+        'admin' => [],
 //        'administrator' => [
 //            'users' => 'c,r,u,d',
 //            'profile' => 'r,u'

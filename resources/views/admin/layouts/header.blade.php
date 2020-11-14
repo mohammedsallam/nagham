@@ -67,19 +67,21 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('cityIndex')}}" class="nav-link">
+                <a href="{{route('cities.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>City</p>
-                  <a href="{{route('typeIndex')}}" class="nav-link">
+                  <a href="{{route('types.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Type</p>
-                  <a href="{{route('contentIndex')}}" class="nav-link">
+                  <a href="{{route('contents.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Content</p>
-                  <a href="{{route('detailsIndex')}}" class="nav-link">
+                  <a href="{{route('details.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Details</p>
-
+                  <a href="{{route('users.index')}}" class="nav-link">
+                  <i class="fa fa-users nav-icon"></i>
+                  <p>Users</p>
                 </a>
             </ul>
           </li>

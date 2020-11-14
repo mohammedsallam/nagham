@@ -18,28 +18,15 @@ use Illuminate\Support\Facades\Auth;
      return redirect()->route('login');
  });
 
-Route::get('/city', [App\Http\Controllers\CityController::class, 'index'])->name('cityIndex');
-Route::post('/Addcity', [App\Http\Controllers\CityController::class, 'create'])->name('cityAdd');
-Route::patch('/Editcity/{city}', [App\Http\Controllers\CityController::class, 'update'])->name('cityEdit');
-Route::delete('/Deletecity/{city}', [App\Http\Controllers\CityController::class, 'delete'])->name('cityDelete');
-
-Route::get('/type/{city?}', [App\Http\Controllers\TypeController::class, 'index'])->name('typeIndex');
-Route::post('/Addtype', [App\Http\Controllers\TypeController::class, 'create'])->name('typeAdd');
-Route::patch('/Edittype/{type}', [App\Http\Controllers\TypeController::class, 'update'])->name('typeEdit');
-Route::delete('/Deletetype/{type}', [App\Http\Controllers\TypeController::class, 'delete'])->name('typeDelete');
-
-Route::get('/content/{type?}', [App\Http\Controllers\ContentController::class, 'index'])->name('contentIndex');
-Route::post('/Addcontent', [App\Http\Controllers\ContentController::class, 'create'])->name('contentAdd');
-Route::patch('/Editcontent/{content}', [App\Http\Controllers\ContentController::class, 'update'])->name('contentEdit');
-Route::delete('/Deletecontent/{content}', [App\Http\Controllers\ContentController::class, 'delete'])->name('contentDelete');
-
-Route::get('/detail/{content?}', [App\Http\Controllers\DetailsController::class, 'index'])->name('detailsIndex');
-Route::post('/Adddetails', [App\Http\Controllers\DetailsController::class, 'create'])->name('detailsAdd');
-Route::patch('/Editdetails/{detail}', [App\Http\Controllers\DetailsController::class, 'update'])->name('detailsEdit');
-Route::delete('/Deletedetails/{detail}', [App\Http\Controllers\DetailsController::class, 'delete'])->name('detailsDelete');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::resource('/cities', App\Http\Controllers\Admin\CityController::class);
+    Route::resource('/types', App\Http\Controllers\Admin\TypeController::class);
+    Route::resource('/contents', App\Http\Controllers\Admin\ContentController::class);
+    Route::resource('/details', App\Http\Controllers\Admin\DetailsController::class);
+    Route::resource('/users', App\Http\Controllers\Admin\UserController::class);
 
 });
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -23,11 +24,17 @@ class CityController extends Controller
 
     public function create(Request $request)
     {
+
+    }
+
+
+    public function store(Request $request)
+    {
         $this->validate($request, [
-        'name' => 'required|min:3',
-        'information' => 'required|min:3',
+            'name' => 'required|min:3',
+            'information' => 'required|min:3',
 //        'type' => 'required|string|min:3',
-        'imageUrl' => 'required|image|mimes:jpg,png,jpeg',
+            'imageUrl' => 'required|image|mimes:jpg,png,jpeg',
         ], [], []);
 
 
@@ -37,9 +44,9 @@ class CityController extends Controller
         $request->imageUrl->move(public_path('uploads'), $imageName);
 
         $city = City::create([
-        'name' => $request->name,
-        'information' => $request->information,
-        'imageUrl' => $imagePath
+            'name' => $request->name,
+            'information' => $request->information,
+            'imageUrl' => $imagePath
         ]);
 
 //        Type::create([
@@ -47,13 +54,7 @@ class CityController extends Controller
 //        'type' => $request->type
 //        ]);
 
-        return redirect()->route('cityIndex')->withMessage('City added successfully');
-    }
-
-
-    public function store(Request $request)
-    {
-        //
+        return redirect()->route('cities.index')->withMessage('City added successfully');
     }
 
 
@@ -100,23 +101,46 @@ class CityController extends Controller
         }
 
 
-        return redirect()->route('cityIndex')->withMessage('City updated successfully');
+        return redirect()->route('cities.index')->withMessage('City updated successfully');
     }
 
 
-    public function delete(City $city)
+    public function destroy(City $city)
     {
         if (!$city) {
             return abort('404');
         }
         if ($city->types()->cursor()->count()){
-            foreach ($city->types()->cursor() as $type) {
-                File::delete(public_path().$type->imageUrl);
+            if ($city->types()->cursor()->count()){
+                foreach ($city->types()->cursor() as $type) {
+                    File::delete(public_path().$type->imageUrl);
+                    if ($type->contents()->cursor()->count()){
+                        foreach ($type->contents()->cursor() as $content) {
+                            File::delete(public_path().$content->imageUrl);
+                            if ($content->detail){
+                                if (fileExists(public_path().$content->detail->imageUrlLocation)){
+                                    File::delete(public_path().$content->detail->imageUrlLocation);
+                                }
+                                if (fileExists(public_path().$content->detail->imageUrl1)){
+                                    File::delete(public_path().$content->detail->imageUrl1);
+                                }
+                                if (fileExists(public_path().$content->detail->imageUrl2)){
+                                    File::delete(public_path().$content->detail->imageUrl2);
+                                }
+                                if (fileExists(public_path().$content->detail->imageUrl3)){
+                                    File::delete(public_path().$content->detail->imageUrl3);
+                                }
+                            }
+
+                        }
+                    }
+
+                }
             }
         }
         File::delete(public_path().$city->imageUrl);
         $city->delete();
-        return redirect('/city')->withMessage('City deleted successfully');
+        return redirect()->route('cities.index')->withMessage('City deleted successfully');
     }
 
 }

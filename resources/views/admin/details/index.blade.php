@@ -30,7 +30,7 @@
 
                                 <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
-                                        <form method="POST" action="{{route('detailsAdd')}}" enctype="multipart/form-data">
+                                        <form method="POST" action="{{route('details.store')}}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -195,7 +195,7 @@
                                                 <td><img src="{{asset($detail->imageUrl1)}} " style="width: 50px;"></td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <form class="mr-1" action="{{route('detailsDelete', $detail)}}" method="POST">
+                                                        <form class="mr-1" action="{{route('details.destroy', $detail)}}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger delete_button" type="submit">Delete</button>
@@ -223,7 +223,7 @@
                                             </tr>
                                             <div class="modal fade ModalEditType" id="ModalEditContent_{{$detail->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg" role="document">
-                                                    <form method="post" action="{{route('detailsEdit', $detail)}}" enctype="multipart/form-data">
+                                                    <form method="post" action="{{route('details.update', $detail)}}" enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PATCH')
                                                         <div class="modal-content">
@@ -395,54 +395,6 @@
         </section>
     </div>
 
-    <div class="modal fade" id="ModalAddType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form method="POST" action="{{route('contentAdd')}}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalAddLabel">New Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="content_id" id="content_id" value="">
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">Name</label>
-                            <input name="name" type="text" class="form-control" id="name" value="{{old('name')}}">
-                            @error('name')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="information" class="col-form-label">Information</label>
-                            <textarea name="information" class="form-control" id="information">{{old('information')}}</textarea>
-                            @error('information')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="content_image" class="col-form-label">
-                                Image
-                                <img style="width: 100px" src="{{asset('assets/admin/images/city.png')}}" alt="" class="content_image">
-                            </label>
-                            <input name="imageUrl" data-target=".content_image" type="file" class="form-control imageUrl d-none" id="content_image">
-                            @error('imageUrl')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
 @endsection
 
 
@@ -487,12 +439,6 @@
 
             });
 
-            $('#ModalAddType').on('show.bs.modal', function(event) {
-                var btnEdit = $(event.relatedTarget);
-                var id = btnEdit.data('id');
-                var modal = $(this);
-                modal.find('.modal-body #content_id').val(id);
-            });
 
             $('.imageUrl').change(function() {
                 let image = $($(this).data('target')),

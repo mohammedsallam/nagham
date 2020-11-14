@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Content;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -14,19 +15,19 @@ class ContentController extends Controller
     protected $view = 'admin.contents.';
 
 
-    public function index(Type $type)
+    public function index()
     {
-        if ($type->id){
-            $contents = $type->contents()->cursor();
-        } else {
-            $contents = Content::cursor();
-        }
-
+//        if ($type->id){
+//            $contents = $type->contents()->cursor();
+//        } else {
+//            $contents = Content::cursor();
+//        }
+        $contents = Content::cursor();
         $types = Type::pluck('id', 'name');
         return view($this->view.'index', compact('contents', 'types'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|min:3',
@@ -46,11 +47,14 @@ class ContentController extends Controller
             'imageUrl' => $imagePath,
         ]);
 
-        return redirect('/content')->withMessage('Content added successfully');
+        return redirect()->route('contents.index')->withMessage('Content added successfully');
     }
-    public function show($id)
+    public function show($type)
     {
-
+        $type = Type::find($type);
+        $contents = $type->contents()->cursor();
+        $types = Type::pluck('id', 'name');
+        return view($this->view.'index', compact('contents', 'types'));
     }
 
     public function edit($id)
@@ -89,11 +93,11 @@ class ContentController extends Controller
         }
 
 
-        return redirect('/content')->withMessage('Content updated successfully');
+        return redirect()->route('contents.index')->withMessage('Content updated successfully');
     }
 
 
-    public function delete(Content $content)
+    public function destroy(Content $content)
     {
         if ($content->detail){
             if (fileExists(public_path().$content->detail->imageUrlLocation)){
@@ -112,7 +116,7 @@ class ContentController extends Controller
 
         File::delete(public_path().$content->imageUrl);
         $content -> delete();
-        return redirect('/content')->withMessage('Content deleted successfully');
+        return redirect()->route('contents.index')->withMessage('Content deleted successfully');
     }
 
 

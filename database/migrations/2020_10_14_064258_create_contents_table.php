@@ -18,7 +18,10 @@ class CreateContentsTable extends Migration
             $table->string('name');
             $table->text('information');
             $table->text('imageUrl');
-            $table->bigInteger('type_id');
+            $table->unsignedBigInteger('type_id');
+
+            $table->foreign('type_id')->references('id')->on('types')->onUpdate('cascade')->onDelete('cascade');
+            $table->index(['type_id']);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

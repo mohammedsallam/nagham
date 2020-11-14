@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Content;
 use App\Models\Detail;
 use Illuminate\Http\Request;
@@ -14,19 +15,19 @@ class DetailsController extends Controller
     protected $view = 'admin.details.';
 
 
-    public function index(Content $content)
+    public function index()
     {
-        if ($content->id){
-            $details = $content->detail->get();
-        } else {
-            $details = Detail::cursor();
-        }
-
+//        if ($content->id){
+//            $details = $content->detail->get();
+//        } else {
+//            $details = Detail::cursor();
+//        }
+        $details = Detail::cursor();
         $contents = Content::pluck('id', 'name');
         return view($this->view.'index', compact('contents', 'details'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $content = Content::find($request->content_id);
         $contentHasDetail = $content->detail;
@@ -74,17 +75,16 @@ class DetailsController extends Controller
 
         Detail::create($data);
 
-        return redirect('/detail')->withMessage('Detail added successfully');
+        return redirect()->route('details.index')->withMessage('Detail added successfully');
     }
-    public function show($id)
+    public function show($content)
     {
-
+        $content = Content::find($content);
+        $details = $content->detail ? $content->detail->get() : null;
+        $contents = Content::pluck('id', 'name');
+        return view($this->view.'index', compact('contents', 'details'));
     }
 
-    public function edit($id)
-    {
-
-    }
 
     public function update(Request $request, Detail $detail)
     {
@@ -148,11 +148,11 @@ class DetailsController extends Controller
 
         $detail->update($data);
 
-        return redirect('/detail')->withMessage('Detail updated successfully');
+        return redirect()->route('details.index')->withMessage('Detail updated successfully');
     }
 
 
-    public function delete(Detail $detail)
+    public function destroy(Detail $detail)
     {
         if (fileExists(public_path().$detail->imageUrlLocation)){
             File::delete(public_path().$detail->imageUrlLocation);
@@ -167,7 +167,7 @@ class DetailsController extends Controller
             File::delete(public_path().$detail->imageUrl3);
         }
         $detail -> delete();
-        return redirect('/detail');
+        return redirect()->route('details.index')->withMessage('Detail deleted successfully');
     }
 
 

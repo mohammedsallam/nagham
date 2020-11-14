@@ -30,7 +30,7 @@
 
               <div class="modal fade add_modal" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                  <form method="POST" action="{{route('cityAdd')}}" enctype="multipart/form-data">
+                  <form method="POST" action="{{route('cities.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
@@ -103,13 +103,13 @@
                     <td> {{$city->name}}</td>
                     <td> {{$city->information}}</td>
                     <td><img src="{{asset($city->imageUrl)}} " style="width: 50px;"></td>
-                    <td><a href="{{route('typeIndex', $city-> id)}}" class="btn btn-success">view type</a></td>
+                    <td><a href="{{route('types.show', $city-> id)}}" class="btn btn-success">view type</a></td>
                     <td class="d-flex justify-content-center">
                         <button data-id="{{$city->id}}" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ModalAddType"><i class="fa fa-plus"></i></button>
                     </td>
                       <td>
                           <div class="d-flex justify-content-center">
-                            <form class="mr-1 " action="{{route('cityDelete', $city)}}" method="POST">
+                            <form class="mr-1 " action="{{route('cities.destroy', $city)}}" method="POST">
                               @csrf
                               @method('DELETE')
                                 <button class="btn btn-danger delete_button" type="submit">Delete</button>
@@ -121,7 +121,7 @@
                   </tr>
                   <div class="modal fade ModalEditCity" id="ModalEdit_{{$city->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
-                          <form method="post" action="{{route('cityEdit', $city->id)}}" enctype="multipart/form-data">
+                          <form method="post" action="{{route('cities.update', $city->id)}}" enctype="multipart/form-data">
                               @csrf
                               @method('PATCH')
                               <div class="modal-content">
@@ -199,7 +199,7 @@
 
 <div class="modal fade" id="ModalAddType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="POST" action="{{route('typeAdd')}}" enctype="multipart/form-data">
+        <form method="POST" action="{{route('types.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
