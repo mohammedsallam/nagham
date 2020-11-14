@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controller\Admin;
 
 use App\Http\Controllers\Controller;
@@ -14,25 +13,12 @@ class TypeController extends Controller
 
     protected $view = 'admin.types.';
 
-
     public function index()
     {
-//        if ($city->id){
-//            $types = $city->types()->cursor();
-//        } else {
-//            $types = Type::cursor();
-//        }
-
         $types = Type::cursor();
         $cities = City::pluck('id', 'name');
         return view($this->view.'index', compact('types', 'cities'));
     }
-  // public function index($city_id)
-  // {
-  //   $city= City::find($city_id);
-  //   $types= $city -> types;
-  //   return view('admin.web.type' ,compact('types'));
-  // }
 
     public function store(Request $request)
     {
@@ -57,17 +43,13 @@ class TypeController extends Controller
 
         return redirect()->route('types.index')->withMessage('Type added successfully');
     }
+
     public function show($city)
     {
         $city = City::find($city);
         $types = $city->types()->cursor();
         $cities = City::pluck('id', 'name');
         return view($this->view.'index', compact('types', 'cities'));
-    }
-
-    public function edit($id)
-    {
-
     }
 
     public function update(Request $request, Type $type)
@@ -104,7 +86,6 @@ class TypeController extends Controller
 
      return redirect()->route('types.index')->withMessage('Type updated successfully');
     }
-
 
     public function destroy(Type $type)
     {

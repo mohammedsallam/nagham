@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'city_id',
     ];
 
     /**
@@ -42,4 +44,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }

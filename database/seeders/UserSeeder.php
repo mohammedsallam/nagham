@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,13 +15,24 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'admin@admin.com',
+            'role' => 'super_admin',
             'password' => bcrypt('123456'),
 
         ]);
 
-        $user->attachRole('super_admin');
+
+        foreach (City::cursor() as $city) {
+            User::factory()->create([
+                'name' => 'Admin for ' . $city->name,
+                'email' => str_replace(' ', '', strtolower($city->name)).'@admin.com',
+                'city_id' => $city->id,
+                'password' => bcrypt('123456'),
+            ]);
+        }
+
+
     }
 }

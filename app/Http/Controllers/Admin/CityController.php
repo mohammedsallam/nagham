@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\Type;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\fileExists;
 
 class CityController extends Controller
 {
-
 
     protected $view = 'admin.cities.';
 
@@ -22,18 +19,11 @@ class CityController extends Controller
         return view($this->view.'index', compact('cities'));
     }
 
-    public function create(Request $request)
-    {
-
-    }
-
-
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|min:3',
             'information' => 'required|min:3',
-//        'type' => 'required|string|min:3',
             'imageUrl' => 'required|image|mimes:jpg,png,jpeg',
         ], [], []);
 
@@ -57,25 +47,11 @@ class CityController extends Controller
         return redirect()->route('cities.index')->withMessage('City added successfully');
     }
 
-
-    public function show($id)
-    {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        //
-    }
-
-
     public function update(Request $request, City $city)
     {
         $this->validate($request, [
         'name' => 'required|min:3',
         'information' => 'required|min:3',
-//        'type' => 'required|string|min:3',
         'imageUrl' => 'sometimes',
         ], [], []);
 
@@ -103,7 +79,6 @@ class CityController extends Controller
 
         return redirect()->route('cities.index')->withMessage('City updated successfully');
     }
-
 
     public function destroy(City $city)
     {

@@ -24,7 +24,6 @@ class CreateDetailsTable extends Migration
             $table->string('location');
             $table->string('link');
             $table->string('notes');
-            // $table->text('information');
             $table->string('imageUrlLocation', 100)->nullable();
             $table->string('imageUrl1', 100);
             $table->string('imageUrl2', 100)->nullable();
