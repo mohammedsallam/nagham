@@ -80,6 +80,9 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                @if(session('message'))
+                    <div class="alert alert-info">{{session('message')}}</div>
+                @endif
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr class="text-center bg-dark">
@@ -106,10 +109,10 @@
                     </td>
                       <td>
                           <div class="d-flex justify-content-center">
-                            <form class="mr-1 " action="/Deletecity/{{$city->id}}" method="POST">
+                            <form class="mr-1 " action="{{route('cityDelete', $city)}}" method="POST">
                               @csrf
                               @method('DELETE')
-                              <a href="{{route('cityDelete', $city-> id)}}" class="btn btn-danger" type="submit">Delete</a>
+                                <button class="btn btn-danger delete_button" type="submit">Delete</button>
                             </form>
 
                             <button class="btn btn-info" data-id="{{$city->id}}" data-name="{{$city->name}}" data-information="{{$city->information}}" data-imagecity="{{asset($city->imageUrl)}}" data-toggle="modal" data-target="#ModalEdit_{{$city->id}}">Edit</button>
@@ -285,7 +288,18 @@
                 reader.readAsDataURL(file);
             }
 
-        })
+        });
+
+        $('.delete_button').click(function (e) {
+            e.preventDefault();
+            if (confirm("Do you want delete?")){
+                $(this).parents('form').submit()
+            }
+        });
+
+        setTimeout(function () {
+            $('.alert').slideUp();
+        }, 2000);
 
     });
 

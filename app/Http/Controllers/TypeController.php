@@ -53,7 +53,7 @@ class TypeController extends Controller
           'imageUrl' => $imagePath,
       ]);
 
-   return redirect('/type');
+   return redirect('/type')->withMessage('Type added successfully');
   }
     public function show($id)
   {
@@ -97,17 +97,22 @@ class TypeController extends Controller
       }
 
 
-     return redirect('/type');
+     return redirect('/type')->withMessage('Type updated successfully');
   }
 
 
-  public function delete($id)
-
+  public function delete(Type $type)
   {
-    $oldtype = Type::find($id);
-      File::delete(public_path().$oldtype->imageUrl);
-    $oldtype -> delete();
-    return redirect('/type');
+
+      if ($type->contents()->cursor()->count()){
+          foreach ($type->contents()->cursor() as $content) {
+              File::delete(public_path().$content->imageUrl);
+          }
+      }
+
+      File::delete(public_path().$type->imageUrl);
+      $type -> delete();
+    return redirect('/type')->withMessage('Type deleted successfully');
   }
 
 

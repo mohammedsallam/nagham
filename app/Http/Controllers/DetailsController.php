@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
-use App\Models\Details;
-use App\Models\Type;
+use App\Models\Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\fileExists;
@@ -18,43 +17,64 @@ class DetailsController extends Controller
     public function index(Content $content)
     {
         if ($content->id){
-            $details = $content->details;
+            $details = $content->detail->get();
         } else {
-            $details = Details::cursor();
+            $details = Detail::cursor();
         }
 
-        $contents = Type::pluck('id', 'name');
+        $contents = Content::pluck('id', 'name');
         return view($this->view.'index', compact('contents', 'details'));
     }
 
     public function create(Request $request)
     {
+        $content = Content::find($request->content_id);
+        $contentHasDetail = $content->detail;
+        if ($contentHasDetail){
+            return back()->withMessage('Content has detail before');
+        }
         $this->validate($request, [
+            'content_id' => 'required',
             'name' => 'required|min:3',
-            'phone1' => 'required|numeric',
-            'phone2' => 'required|numeric',
-            'phone3' => 'required|numeric',
-            'emailFacebook' => 'required|url',
-            'emailInstagram' => 'required|url',
             'location' => 'required',
             'link' => 'required',
             'notes' => 'required|min:3',
-            'imageUrlLocation' => 'required',
-            'imageUrl' => 'required',
+            'emailFacebook' => 'required|url',
+            'emailInstagram' => 'sometimes|url',
+            'phone1' => 'required|numeric',
+            'phone2' => 'sometimes|numeric',
+            'phone3' => 'sometimes|numeric',
+            'imageUrlLocation' => 'sometimes',
+            'imageUrl1' => 'required',
+            'imageUrl2' => 'sometimes',
+            'imageUrl3' => 'sometimes',
         ], [], []);
 
-        $imageName = 'content_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
-        $imagePath = '/uploads/'.$imageName;
-        $request->imageUrl->move(public_path('uploads'), $imageName);
+        $data = $request->except(['imageUrlLocation', 'imageUrl1', 'imageUrl2', 'imageUrl3']);
 
-        Content::create([
-            'name' => $request->name,
-            'information' => $request->information,
-            'type_id' => $request->type_id,
-            'imageUrl' => $imagePath,
-        ]);
+        $imageName = 'content__image_1' . time() . '.' . $request->imageUrl1->getClientOriginalExtension();
+        $data['imageUrl1'] = '/uploads/'.$imageName;
+        $request->imageUrl1->move(public_path('uploads'), $imageName);
 
-        return redirect('/content');
+        if ($request->imageUrlLocation){
+            $imageName = 'content_location_image' . time() . '.' . $request->imageUrlLocation->getClientOriginalExtension();
+            $data['imageUrlLocation'] = '/uploads/'.$imageName;
+            $request->imageUrlLocation->move(public_path('uploads'), $imageName);
+        }
+        if ($request->imageUrl2){
+            $imageName = 'content__image_2' . time() . '.' . $request->imageUrl2->getClientOriginalExtension();
+            $data['imageUrl2'] = '/uploads/'.$imageName;
+            $request->imageUrl2->move(public_path('uploads'), $imageName);
+        }
+        if ($request->imageUrl3){
+            $imageName = 'content__image_3' . time() . '.' . $request->imageUrl3->getClientOriginalExtension();
+            $data['imageUrl3'] = '/uploads/'.$imageName;
+            $request->imageUrl3->move(public_path('uploads'), $imageName);
+        }
+
+        Detail::create($data);
+
+        return redirect('/detail')->withMessage('Detail added successfully');
     }
     public function show($id)
     {
@@ -66,49 +86,88 @@ class DetailsController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Detail $detail)
     {
         $this->validate($request, [
+            'content_id' => 'required',
             'name' => 'required|min:3',
-            'information' => 'required|min:3',
-            'type_id' => 'required',
-            'imageUrl' => 'sometimes',
+            'location' => 'required',
+            'link' => 'required',
+            'notes' => 'required|min:3',
+            'emailFacebook' => 'required|url',
+            'emailInstagram' => 'sometimes|url',
+            'phone1' => 'required|numeric',
+            'phone2' => 'sometimes|numeric',
+            'phone3' => 'sometimes|numeric',
+            'imageUrlLocation' => 'sometimes',
+            'imageUrl1' => 'sometimes',
+            'imageUrl2' => 'sometimes',
+            'imageUrl3' => 'sometimes',
         ], [], []);
 
-        $content = Content::find($id);
+        $data = $request->except(['imageUrlLocation', 'imageUrl1', 'imageUrl2', 'imageUrl3']);
 
-        $content->update($request->except(['imageUrl']));
+        if ($request->imageUrlLocation){
 
-        if ($request->imageUrl){
-            if ($content->imageUrl){
-                if (fileExists(public_path().$content->imageUrl)){
-                    File::delete(public_path().$content->imageUrl);
-                }
-
-                $imageName = 'content_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
-                $imagePath = '/uploads/'.$imageName;
-                $request->imageUrl->move(public_path('uploads'), $imageName);
-                $content->update(['imageUrl' => $imagePath]);
-
-            } else {
-                $imageName = 'content_' . time() . '.' . $request->imageUrl->getClientOriginalExtension();
-                $imagePath = '/uploads/'.$imageName;
-                $request->imageUrl->move(public_path('uploads'), $imageName);
-                $content->update(['imageUrl' => $imagePath]);
+            if (fileExists(public_path().$detail->imageUrlLocation)){
+                File::delete(public_path().$detail->imageUrlLocation);
             }
+
+            $imageName = 'content_location_image' . time() . '.' . $request->imageUrlLocation->getClientOriginalExtension();
+            $data['imageUrlLocation'] = '/uploads/'.$imageName;
+            $request->imageUrlLocation->move(public_path('uploads'), $imageName);
         }
 
+        if ($request->imageUrl1){
 
-        return redirect('/content');
+            if (fileExists(public_path().$detail->imageUrl1)){
+                File::delete(public_path().$detail->imageUrl1);
+            }
+            $imageName = 'content__image_1' . time() . '.' . $request->imageUrl1->getClientOriginalExtension();
+            $data['imageUrl1'] = '/uploads/'.$imageName;
+            $request->imageUrl1->move(public_path('uploads'), $imageName);
+        }
+        if ($request->imageUrl2){
+
+            if (fileExists(public_path().$detail->imageUrl2)){
+                File::delete(public_path().$detail->imageUrl2);
+            }
+            $imageName = 'content__image_2' . time() . '.' . $request->imageUrl2->getClientOriginalExtension();
+            $data['imageUrl2'] = '/uploads/'.$imageName;
+            $request->imageUrl2->move(public_path('uploads'), $imageName);
+        }
+        if ($request->imageUrl3){
+
+            if (fileExists(public_path().$detail->imageUrl3)){
+                File::delete(public_path().$detail->imageUrl3);
+            }
+            $imageName = 'content__image_3' . time() . '.' . $request->imageUrl3->getClientOriginalExtension();
+            $data['imageUrl3'] = '/uploads/'.$imageName;
+            $request->imageUrl3->move(public_path('uploads'), $imageName);
+        }
+
+        $detail->update($data);
+
+        return redirect('/detail')->withMessage('Detail updated successfully');
     }
 
 
-    public function delete($id)
+    public function delete(Detail $detail)
     {
-        $oldContent = Content::find($id);
-        File::delete(public_path().$oldContent->imageUrl);
-        $oldContent -> delete();
-        return redirect('/content');
+        if (fileExists(public_path().$detail->imageUrlLocation)){
+            File::delete(public_path().$detail->imageUrlLocation);
+        }
+        if (fileExists(public_path().$detail->imageUrl1)){
+            File::delete(public_path().$detail->imageUrl1);
+        }
+        if (fileExists(public_path().$detail->imageUrl2)){
+            File::delete(public_path().$detail->imageUrl2);
+        }
+        if (fileExists(public_path().$detail->imageUrl3)){
+            File::delete(public_path().$detail->imageUrl3);
+        }
+        $detail -> delete();
+        return redirect('/detail');
     }
 
 

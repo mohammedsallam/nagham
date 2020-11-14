@@ -11,9 +11,9 @@ class Content extends Model
     protected $fillable =['name', 'imageUrl', 'information','type_id'];
 
     //realation
-public function details()
+public function detail()
 {
-    return $this->belongsTo(Details::class, 'details_id');
+    return $this->hasOne(Detail::class);
 }
 
 public function type()

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Details extends Model
+class Detail extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -16,7 +16,7 @@ class Details extends Model
     //realation
     public function content()
     {
-        return $this->hasOne(Content::class, 'content_id', null);
+        return $this->belongsTo(Content::class);
     }
 
     public function hasoneRrlation()

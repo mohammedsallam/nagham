@@ -47,7 +47,7 @@ class CityController extends Controller
 //        'type' => $request->type
 //        ]);
 
-        return redirect()->route('cityIndex');
+        return redirect()->route('cityIndex')->withMessage('City added successfully');
     }
 
 
@@ -99,33 +99,24 @@ class CityController extends Controller
             }
         }
 
-//        $city->types()->update([
-//            'city_id' => $city->id,
-//            'type' => $request->type
-//        ]);
 
-        return redirect()->route('cityIndex');
+        return redirect()->route('cityIndex')->withMessage('City updated successfully');
     }
 
 
-    public function delete($id)
+    public function delete(City $city)
     {
-        $oldcity = City::find($id);
-        if (!$oldcity) {
-        return abort('404');
+        if (!$city) {
+            return abort('404');
         }
-        File::delete(public_path().$oldcity->imageUrl);
-        $oldcity->delete();
-        return redirect('/city');
+        if ($city->types()->cursor()->count()){
+            foreach ($city->types()->cursor() as $type) {
+                File::delete(public_path().$type->imageUrl);
+            }
+        }
+        File::delete(public_path().$city->imageUrl);
+        $city->delete();
+        return redirect('/city')->withMessage('City deleted successfully');
     }
 
-    // public function citiesHasTypes()
-    // {
-    //   return $city = City::whereHas('cities')->get();
-
-    // }
-
-    // public function citiesNotHasTypes()
-    // {
-    // }
 }

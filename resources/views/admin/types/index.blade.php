@@ -91,6 +91,9 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                @if(session('message'))
+                    <div class="alert alert-info">{{session('message')}}</div>
+                @endif
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr class="text-center bg-dark">
@@ -119,10 +122,10 @@
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
-                          <form class="mr-1 " action="{{route('typeDelete', $type->id)}}" method="POST">
+                          <form class="mr-1 " action="{{route('typeDelete', $type)}}" method="POST">
                               @csrf
                               @method('DELETE')
-                              <button class="btn btn-danger" type="submit">Delete</button>
+                              <button class="btn btn-danger delete_button" type="submit">Delete</button>
                           </form>
                           <button class="btn btn-info" data-id="{{$type->id}}" data-name="{{$type->name}}" data-information="{{$type->information }}" data-imageType="{{asset($type->imageUrl)}}" data-toggle="modal" data-target="#ModalEditType_{{$type->id}}">Edit</button>
 
@@ -222,7 +225,7 @@
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalAddLabel">New Type</h5>
+                    <h5 class="modal-title" id="ModalAddLabel">New Content</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -306,6 +309,17 @@
             }
 
         })
+
+        $('.delete_button').click(function (e) {
+            e.preventDefault();
+            if (confirm("Do you want delete?")){
+                $(this).parents('form').submit()
+            }
+        });
+
+        setTimeout(function () {
+            $('.alert').slideUp();
+        }, 2000);
 
 
 });
