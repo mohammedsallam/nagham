@@ -14,11 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('123456'),
+        $this->call(LaratrustSeeder::class);
+        $this->call(UserSeeder::class);
 
-         ]);
     }
 }

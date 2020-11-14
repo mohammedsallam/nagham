@@ -59,6 +59,7 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         ),
         'T' => 
         array (
+            'Traitor\\' => 8,
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tests\\' => 6,
         ),
@@ -129,6 +130,7 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
             'League\\CommonMark\\' => 18,
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
+            'Laratrust\\' => 10,
         ),
         'I' => 
         array (
@@ -204,6 +206,10 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Traitor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kkszymanowski/traitor/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -401,6 +407,10 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
+        'Laratrust\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/santigarcor/laratrust/src',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -557,6 +567,8 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         'App\\Models\\City' => __DIR__ . '/../..' . '/app/Models/City.php',
         'App\\Models\\Content' => __DIR__ . '/../..' . '/app/Models/Content.php',
         'App\\Models\\Detail' => __DIR__ . '/../..' . '/app/Models/Detail.php',
+        'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
+        'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Type' => __DIR__ . '/../..' . '/app/Models/Type.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -668,6 +680,7 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\LaratrustSeeder' => __DIR__ . '/../..' . '/database/seeders/LaratrustSeeder.php',
         'DeepCopy\\DeepCopy' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
         'DeepCopy\\Exception\\CloneException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
         'DeepCopy\\Exception\\PropertyException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/PropertyException.php',
@@ -2524,6 +2537,49 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'Laratrust\\Checkers\\LaratrustCheckerManager' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/LaratrustCheckerManager.php',
+        'Laratrust\\Checkers\\Role\\LaratrustRoleChecker' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/Role/LaratrustRoleChecker.php',
+        'Laratrust\\Checkers\\Role\\LaratrustRoleDefaultChecker' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/Role/LaratrustRoleDefaultChecker.php',
+        'Laratrust\\Checkers\\Role\\LaratrustRoleQueryChecker' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/Role/LaratrustRoleQueryChecker.php',
+        'Laratrust\\Checkers\\User\\LaratrustUserChecker' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/User/LaratrustUserChecker.php',
+        'Laratrust\\Checkers\\User\\LaratrustUserDefaultChecker' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/User/LaratrustUserDefaultChecker.php',
+        'Laratrust\\Checkers\\User\\LaratrustUserQueryChecker' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Checkers/User/LaratrustUserQueryChecker.php',
+        'Laratrust\\Console\\AddLaratrustUserTraitUseCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/AddLaratrustUserTraitUseCommand.php',
+        'Laratrust\\Console\\MakePermissionCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/MakePermissionCommand.php',
+        'Laratrust\\Console\\MakeRoleCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/MakeRoleCommand.php',
+        'Laratrust\\Console\\MakeSeederCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/MakeSeederCommand.php',
+        'Laratrust\\Console\\MakeTeamCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/MakeTeamCommand.php',
+        'Laratrust\\Console\\MigrationCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/MigrationCommand.php',
+        'Laratrust\\Console\\SetupCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/SetupCommand.php',
+        'Laratrust\\Console\\SetupTeamsCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/SetupTeamsCommand.php',
+        'Laratrust\\Console\\UpgradeCommand' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Console/UpgradeCommand.php',
+        'Laratrust\\Contracts\\LaratrustPermissionInterface' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Contracts/LaratrustPermissionInterface.php',
+        'Laratrust\\Contracts\\LaratrustRoleInterface' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Contracts/LaratrustRoleInterface.php',
+        'Laratrust\\Contracts\\LaratrustTeamInterface' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Contracts/LaratrustTeamInterface.php',
+        'Laratrust\\Contracts\\LaratrustUserInterface' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Contracts/LaratrustUserInterface.php',
+        'Laratrust\\Contracts\\Ownable' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Contracts/Ownable.php',
+        'Laratrust\\Helper' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Helper.php',
+        'Laratrust\\Http\\Controllers\\PermissionsController' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Http/Controllers/PermissionsController.php',
+        'Laratrust\\Http\\Controllers\\RolesAssignmentController' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Http/Controllers/RolesAssignmentController.php',
+        'Laratrust\\Http\\Controllers\\RolesController' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Http/Controllers/RolesController.php',
+        'Laratrust\\Laratrust' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Laratrust.php',
+        'Laratrust\\LaratrustFacade' => __DIR__ . '/..' . '/santigarcor/laratrust/src/LaratrustFacade.php',
+        'Laratrust\\LaratrustRegistersBladeDirectives' => __DIR__ . '/..' . '/santigarcor/laratrust/src/LaratrustRegistersBladeDirectives.php',
+        'Laratrust\\LaratrustServiceProvider' => __DIR__ . '/..' . '/santigarcor/laratrust/src/LaratrustServiceProvider.php',
+        'Laratrust\\Middleware\\LaratrustAbility' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Middleware/LaratrustAbility.php',
+        'Laratrust\\Middleware\\LaratrustMiddleware' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Middleware/LaratrustMiddleware.php',
+        'Laratrust\\Middleware\\LaratrustPermission' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Middleware/LaratrustPermission.php',
+        'Laratrust\\Middleware\\LaratrustRole' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Middleware/LaratrustRole.php',
+        'Laratrust\\Models\\LaratrustPermission' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Models/LaratrustPermission.php',
+        'Laratrust\\Models\\LaratrustRole' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Models/LaratrustRole.php',
+        'Laratrust\\Models\\LaratrustTeam' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Models/LaratrustTeam.php',
+        'Laratrust\\Traits\\LaratrustDynamicUserRelationsCalls' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustDynamicUserRelationsCalls.php',
+        'Laratrust\\Traits\\LaratrustHasEvents' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustHasEvents.php',
+        'Laratrust\\Traits\\LaratrustHasScopes' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustHasScopes.php',
+        'Laratrust\\Traits\\LaratrustPermissionTrait' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustPermissionTrait.php',
+        'Laratrust\\Traits\\LaratrustRoleTrait' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustRoleTrait.php',
+        'Laratrust\\Traits\\LaratrustTeamTrait' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustTeamTrait.php',
+        'Laratrust\\Traits\\LaratrustUserTrait' => __DIR__ . '/..' . '/santigarcor/laratrust/src/Traits/LaratrustUserTrait.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -5014,6 +5070,10 @@ class ComposerStaticInit6b88535bb660a8fc25e719d49eec5434
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+        'Traitor\\Handlers\\AbstractTreeHandler' => __DIR__ . '/..' . '/kkszymanowski/traitor/src/Handlers/AbstractTreeHandler.php',
+        'Traitor\\Handlers\\Handler' => __DIR__ . '/..' . '/kkszymanowski/traitor/src/Handlers/Handler.php',
+        'Traitor\\TraitUseAdder' => __DIR__ . '/..' . '/kkszymanowski/traitor/src/TraitUseAdder.php',
+        'Traitor\\Traitor' => __DIR__ . '/..' . '/kkszymanowski/traitor/src/Traitor.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
