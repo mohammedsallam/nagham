@@ -1,3 +1,35 @@
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#What-does-the-application-do">What does the application do?</a></ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#requirements ">Requirements</a></li>
+        <li><a href="#installation ">Installation</a></li>
+      </ul>
+    </li>
+    <li>
+        <a href="#usage"> Usage</a>
+        <ul>
+            <li><a target="_blank" href="#the-most-important-things-are">The most important things are</a></li>
+            <li><a target="_blank" href="#notes ">Notes</a></li>
+            <li><a target="_blank" href="#db-design ">DB Design</a></li>
+        </ul>
+    </li>
+    <li>
+        <a target="_blank" href="#test-report">Test report</a>
+    </li>
+    <li>
+        <a target="_blank" href="#api">API</a>
+    </li>
+      </ol>
+</details>
+
+
 ## What does the application do?
 
 CMS application management the content of your website,
